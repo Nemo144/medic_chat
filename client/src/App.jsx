@@ -14,8 +14,7 @@ const App = () => {
     <div className="app__wrapper">
       <Chat client={client} theme="team light">
         <ChannelListContainer />
-
-        <ChannelListContainer />
+        <ChannelContainer />
       </Chat>
     </div>
   );
