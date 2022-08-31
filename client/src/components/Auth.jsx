@@ -4,10 +4,14 @@ import axios from "axios";
 import signinImage from "../assets/signup.jpg";
 
 const Auth = () => {
+  const [isSignup, setIsSignup] = useState(true);
+
   const handleChange = () => {
     console.log("");
   };
-  const [isSignup, setIsSignup] = useState(true);
+  const switchMode = () => {
+    setIsSignup((previsSignup) => !previsSignup);
+  };
   return (
     <div className="auth__form-container">
       <div className="auth__form-container_fields">
@@ -51,7 +55,52 @@ const Auth = () => {
                 />
               </div>
             )}
+
+            {isSignup && (
+              <div className="auth__form-container_fields-content_input">
+                <label htmlFor="AvatarURL">Avatar URL</label>
+                <input
+                  name="avatarURL"
+                  type="text"
+                  placeholder="Avatar"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
+
+            <div className="auth__form-container_fields-content_input">
+              <label htmlFor="password">Password</label>
+              <input
+                name="password"
+                type="password"
+                placeholder="Password"
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {isSignup && (
+              <div className="auth__form-container_fields-content_input">
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  name="confirmPassword"
+                  type="password"
+                  placeholder=" Confirm Password"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
           </form>
+
+          <div className="auth__form-container_fields-account">
+            <p>
+              {isSignup ? "Already have an account?" : "Don't have an account"}
+
+              <span onClick={switchMode}>{isSignup ? "SignIn" : "Signup"}</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
