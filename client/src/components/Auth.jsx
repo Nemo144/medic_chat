@@ -3,14 +3,31 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import signinImage from "../assets/signup.jpg";
 
+const initialState = {
+  fullname: "",
+  username: "",
+  password: "",
+  confirmPassword: "",
+  phoneNumber: "",
+  avatarURL: "",
+};
+
 const Auth = () => {
+  const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(true);
 
-  const handleChange = () => {
-    console.log("");
+  const handleChange = (e) => {
+    //the name(username) property will be changed
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
+
   const switchMode = () => {
     setIsSignup((previsSignup) => !previsSignup);
+  };
+
+  const handleSubmit = (e) => {
+    //e.preventDefault to avoid reloading the page
+    e.preventDefault();
   };
   return (
     <div className="auth__form-container">
@@ -18,7 +35,7 @@ const Auth = () => {
         <div className="auth__form-container_fields-content">
           <p>{isSignup ? "Sign Up" : "Sign In"}</p>
 
-          <form onSubmit={{}}>
+          <form onSubmit={handleSubmit}>
             {isSignup && (
               <div className="auth__form-container_fields-content_input">
                 <label htmlFor="fullName">Full Name</label>
@@ -92,6 +109,10 @@ const Auth = () => {
                 />
               </div>
             )}
+
+            <div className="auth__form-container_fields-content_button">
+              <button>{isSignup ? "Sign Up" : "Sign In"}</button>
+            </div>
           </form>
 
           <div className="auth__form-container_fields-account">
@@ -102,6 +123,10 @@ const Auth = () => {
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="auth__form-container_image">
+        <img src={signinImage} alt="sign in" />
       </div>
     </div>
   );
