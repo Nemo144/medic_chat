@@ -15,3 +15,8 @@ require("dotenv").config();
 app.use(cors()); //calling cors inside the use will allow me make cross origin request
 
 app.use(express.json()); //this will allow me to pass json payloads from the frontend to the backend
+
+app.use(express.urlencoded);
+
+//to create the route for my application
+app.get("/", (res, req) => {});
