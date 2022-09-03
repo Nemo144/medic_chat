@@ -19,4 +19,6 @@ app.use(express.json()); //this will allow me to pass json payloads from the fro
 app.use(express.urlencoded);
 
 //to create the route for my application
-app.get("/", (res, req) => {});
+app.get("/", (res, req) => {
+  res.send("Hello world");
+});
