@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 
+//to require routes for sign in and sign up
+const authRoutes = require("./routes/auth.js");
+
 //creating an instance of the express application
 const app = express();
 
