@@ -16,11 +16,11 @@ app.use(cors()); //calling cors inside the use will allow me make cross origin r
 
 app.use(express.json()); //this will allow me to pass json payloads from the frontend to the backend
 
-app.use(express.urlencoded);
+app.use(express.urlencoded());
 
 //to create the route for my application
-app.get("/", (res, req) => {
-  res.send("Hello world");
+app.get("/", (req, res) => {
+  res.send("Hello world!");
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
