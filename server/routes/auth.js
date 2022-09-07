@@ -1,5 +1,7 @@
 const express = require("express");
 
+const { signup, login } = require("../controllers/auth.js");
+
 //getting a router from express
 const router = express.Router();
 
