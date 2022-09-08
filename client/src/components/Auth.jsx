@@ -3,8 +3,11 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import signinImage from "../assets/signup.jpg";
 
+//creating an instance of a cookie for the destructured {data}
+const cookies = new Cookies();
+
 const initialState = {
-  fullname: "",
+  fullName: "",
   username: "",
   password: "",
   confirmPassword: "",
@@ -25,10 +28,42 @@ const Auth = () => {
     setIsSignup((previsSignup) => !previsSignup);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     //e.preventDefault to avoid reloading the page
     e.preventDefault();
+
+    //passing the form data back to the backend
+    const { fullName, username, password, phoneNumber, avatarURL } = form;
+
+    //specifying the url we will be making the request to
+    const URL = "http://localhost:5000/auth";
+
+    //using axios to make the data request
+    const {
+      data: { token, userId, hashedPassword },
+    } = await axios.post(`${URL}/${isSignup ? "signup" : "login"}`, {
+      username,
+      password,
+      fullName,
+      phoneNumber,
+      avatarURL,
+    });
+
+    cookies.set("token", token);
+    cookies.set("username", username);
+    cookies.set("fullName", fullName);
+    cookies.set("userId", userId);
+
+    if (isSignup) {
+      cookies.set("phoneNumber", phoneNumber);
+      cookies.set("avatarURL", avatarURL);
+      cookies.set("hashedPassword", hashedPassword);
+    }
+
+    //after setting the cookies, to reload the browser, we say:
+    window.location.reload();
   };
+
   return (
     <div className="auth__form-container">
       <div className="auth__form-container_fields">
