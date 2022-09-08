@@ -1,7 +1,9 @@
 const { connect } = require("getstream");
 const bcrypt = require("bcrypt");
-const streamChat = require("stream-chat");
+const StreamChat = require("stream-chat").StreamChat;
 const crypto = require("crypto");
+
+require("dotenv").config();
 
 const api_key = process.env.STREAM_API_KEY;
 const api_secret = process.env.STREAM_API_KEY;
@@ -63,15 +65,13 @@ const login = async (req, res) => {
 
     //if all is successfull, we want to send all the data back to the frontend
     if (success) {
-      res
-        .status(200)
-        .json({
-          username,
-          password,
-          token,
-          fullName: users[0].fullName,
-          userId: users[0].id,
-        });
+      res.status(200).json({
+        username,
+        password,
+        token,
+        fullName: users[0].fullName,
+        userId: users[0].id,
+      });
     } else {
       res.status(500).json({ message: "incorrect password" });
     }
