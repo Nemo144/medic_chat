@@ -36,8 +36,45 @@ const signup = async (req, res) => {
   }
 };
 
-const login = (req, res) => {
+const login = async (req, res) => {
   try {
+    //info we neet to get from the frontend
+    const { username, password } = req.body;
+
+    //to make a connection between the getstream and the server
+    const serverClient = connect(api_key, api_secret, app_id);
+
+    //creating a new instance of a stream-chat
+    const client = StreamChat.getInstance(api_key, api_secret);
+
+    //querying all the users from the database that match this particular username
+    const { users } = await client.queryUsers({ name: username });
+
+    //if the user is not found
+    if (!users.length)
+      return res.status(400).json({ messgae: "user not found" });
+
+    //if username matches, then we have to decrypt the password to see
+    //if it matches the one the user created the account with.
+    const success = await bcrypt.compare(password, users[0].hashedPassword);
+
+    //creating a new user token
+    const token = serverClient.createUserToken(users[0].id);
+
+    //if all is successfull, we want to send all the data back to the frontend
+    if (success) {
+      res
+        .status(200)
+        .json({
+          username,
+          password,
+          token,
+          fullName: users[0].fullName,
+          userId: users[0].id,
+        });
+    } else {
+      res.status(500).json({ message: "incorrect password" });
+    }
   } catch (error) {
     console.log(error);
 
