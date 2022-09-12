@@ -19,7 +19,7 @@ if (authToken) {
   //if we have the authToken, we want to create the user
   client.connectUser(
     {
-      // id: cookies.get("userId"),
+      id: cookies.get("userId"),
       name: cookies.get("username"),
       fullName: cookies.get("fullName"),
       image: cookies.get("avatarURL"),
